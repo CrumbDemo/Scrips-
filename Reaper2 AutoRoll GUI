@@ -103,7 +103,8 @@ TextButton.MouseButton1Click:Connect(function()
             local TargetText = string.lower(TargetText)
             local TargetSecondaries = TargetText:split(",")
             for _, Secondary in ipairs(TargetSecondaries) do
-                if string.lower(CurrentSecondary):match(Secondary) then
+                local CheckingSecondary = CurrentSecondary:gsub(" ", "")
+                if string.lower(CheckingSecondary):match(Secondary) then
                     IsTarget = true
                     print("Obtained Target")
                     local OldTarget = TextBox.Text
