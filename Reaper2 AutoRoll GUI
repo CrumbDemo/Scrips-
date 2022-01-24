@@ -91,6 +91,7 @@ local Cash = tonumber(game:GetService("ReplicatedStorage").Remotes.ReturnData:In
 game.Players.LocalPlayer.CharacterAdded:Connect(function()
     wait(1.5)
     CurrentSecondary = GetDATA()
+    print("Rolled "..CurrentSecondary)
 end)
 
 TextButton.MouseButton1Click:Connect(function()
@@ -124,10 +125,10 @@ TextButton.MouseButton1Click:Connect(function()
             end
             game.Players.LocalPlayer.CharacterAdded:Wait()
             wait(1.75)
-            print("Rolled "..CurrentSecondary)
         end
     else
         _G.AutoReroll = false
     end
 end)
+
 
