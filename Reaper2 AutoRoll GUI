@@ -124,11 +124,16 @@ TextButton.MouseButton1Click:Connect(function()
             else
                 game:GetService("ReplicatedStorage").Remotes.Purchase:FireServer("Roll Secondary")
             end
-            game.Players.LocalPlayer.CharacterAdded:Wait()
+            local CharAdded = false
+            local Checker = game.Players.LocalPlayer.CharacterAdded(function()
+                CharAdded = true
+            end
+            repeat
+                wait()
+            until CharAdded == true or _G.AutoReroll == false
             wait(1.75)
+            Checker:Disconnect()
         end
-    else
-        _G.AutoReroll = false
     end
 end)
 
