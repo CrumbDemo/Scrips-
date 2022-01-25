@@ -127,7 +127,7 @@ TextButton.MouseButton1Click:Connect(function()
             local CharAdded = false
             local Checker = game.Players.LocalPlayer.CharacterAdded(function()
                 CharAdded = true
-            end
+            end)
             repeat
                 wait()
             until CharAdded == true or _G.AutoReroll == false
@@ -136,5 +136,4 @@ TextButton.MouseButton1Click:Connect(function()
         end
     end
 end)
-
 
