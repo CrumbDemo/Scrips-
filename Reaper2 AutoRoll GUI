@@ -125,7 +125,7 @@ TextButton.MouseButton1Click:Connect(function()
                 game:GetService("ReplicatedStorage").Remotes.Purchase:FireServer("Roll Secondary")
             end
             local CharAdded = false
-            local Checker = game.Players.LocalPlayer.CharacterAdded(function()
+            local Checker = game.Players.LocalPlayer.CharacterAdded:Connect(function()
                 CharAdded = true
             end)
             repeat
@@ -137,4 +137,3 @@ TextButton.MouseButton1Click:Connect(function()
     end
 end)
 
---Fix
