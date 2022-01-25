@@ -74,7 +74,7 @@ TextBox.BackgroundTransparency = 1.000
 TextBox.Position = UDim2.new(0.5, 0, 0.5, 0)
 TextBox.Size = UDim2.new(0.949999988, 0, 0.899999976, 0)
 TextBox.Font = Enum.Font.Ubuntu
-TextBox.PlaceholderText = "INSERT WANTED SECONDARIES (Seperate with commas, for Ryujin Jakka etc you can just put 'jakka' in, same for katen kyokotsu, just put 'katen'"
+TextBox.PlaceholderText = "INSERT WANTED SECONDARIES (Seperate with commas, USE ACCENTS FOR Ryūjin Jakka ETC.)"
 TextBox.Text = ""
 TextBox.TextColor3 = Color3.fromRGB(0, 0, 0)
 TextBox.TextScaled = true
@@ -113,29 +113,29 @@ local function GetDATA()
     return(Secondary)
 end
 
-local CurrentSecondary = GetDATA()
 local Cash = tonumber(game:GetService("ReplicatedStorage").Remotes.ReturnData:InvokeServer("Cash"))
+local CurrentSecondary = GetDATA()
 
 game.Players.LocalPlayer.CharacterAdded:Connect(function()
-    wait(1.5)
+    wait(0.75)
     CurrentSecondary = GetDATA()
     TextLabel.Text = CurrentSecondary
     print("Rolled "..CurrentSecondary)
 end)
 
 TextButton.MouseButton1Click:Connect(function()
-    if _G.AutoReroll == false and Cash >= 5000 and TextBox.Text ~= "" then
+    local TargetText = TextBox.Text:gsub(" ", "")
+    local TargetText = string.lower(TargetText)
+    local TargetSecondaries = TargetText:split(",")
+    if _G.AutoReroll == false and TextBox.Text ~= "" then
         _G.AutoReroll = true
         while _G.AutoReroll == true do
             local IsTarget = false
-            local TargetText = TextBox.Text:gsub(" ", "")
-            local TargetText = string.lower(TargetText)
-            local TargetSecondaries = TargetText:split(",")
             for _, Secondary in ipairs(TargetSecondaries) do
                 local CheckingSecondary = CurrentSecondary:gsub(" ", "")
                 if string.lower(CheckingSecondary):match(Secondary) then
                     IsTarget = true
-                    print("Obtained Target")
+                    print("OBTAINED TARGET: "..CurrentSecondary)
                     local OldTarget = TextBox.Text
                     TextBox.Text = 'Obtained wanted secondary!!'
                     for count = 1,10 do
@@ -148,21 +148,16 @@ TextButton.MouseButton1Click:Connect(function()
                     break
                 end
             end
+            Cash = tonumber(game:GetService("ReplicatedStorage").Remotes.ReturnData:InvokeServer("Cash"))
             if IsTarget == true or Cash < 5000 then
                 _G.AutoReroll = false
             else
                 game:GetService("ReplicatedStorage").Remotes.Purchase:FireServer("Roll Secondary")
             end
-            local CharAdded = false
-            local Checker = game.Players.LocalPlayer.CharacterAdded:Connect(function()
-                CharAdded = true
-            end)
-            repeat
-                wait()
-            until CharAdded == true or _G.AutoReroll == false
-            wait(1.75)
-            Checker:Disconnect()
+            if _G.AutoReroll == true then
+                game.Players.LocalPlayer.CharacterAdded:Wait()
+                wait(1)
+            end
         end
     end
 end)
-
