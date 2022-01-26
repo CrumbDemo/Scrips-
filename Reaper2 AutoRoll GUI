@@ -1,5 +1,89 @@
+_G.AutoReroll = nil
 if _G.AutoReroll ~= nil then return end
 _G.AutoReroll = false
+_G.LoopOn = false
+
+local FileText = ''
+local HTTPService = game:GetService("HttpService")
+
+if not isfile("Reaper2/WantedSec.txt") then
+    makefolder("Reaper2")
+    writefile("Reaper2/WantedSec.txt", '')
+else
+    FileText = readfile("Reaper2/WantedSec.txt")
+end
+    
+
+function stripChars(str)
+    local tableAccents = {}
+        tableAccents["à"] = "a"
+        tableAccents["á"] = "a"
+        tableAccents["â"] = "a"
+        tableAccents["ã"] = "a"
+        tableAccents["ä"] = "a"
+        tableAccents["ç"] = "c"
+        tableAccents["è"] = "e"
+        tableAccents["é"] = "e"
+        tableAccents["ê"] = "e"
+        tableAccents["ë"] = "e"
+        tableAccents["ì"] = "i"
+        tableAccents["í"] = "i"
+        tableAccents["î"] = "i"
+        tableAccents["ï"] = "i"
+        tableAccents["ñ"] = "n"
+        tableAccents["ò"] = "o"
+        tableAccents["ó"] = "o"
+        tableAccents["ô"] = "o"
+        tableAccents["õ"] = "o"
+        tableAccents["ö"] = "o"
+        tableAccents["ō"] = "o"
+        tableAccents["ù"] = "u"
+        tableAccents["ú"] = "u"
+        tableAccents["û"] = "u"
+        tableAccents["ū"] = "u"
+        tableAccents["ü"] = "u"
+        tableAccents["ý"] = "y"
+        tableAccents["ÿ"] = "y"
+        tableAccents["À"] = "A"
+        tableAccents["Á"] = "A"
+        tableAccents["Â"] = "A"
+        tableAccents["Ã"] = "A"
+        tableAccents["Ä"] = "A"
+        tableAccents["Ç"] = "C"
+        tableAccents["È"] = "E"
+        tableAccents["É"] = "E"
+        tableAccents["Ê"] = "E"
+        tableAccents["Ë"] = "E"
+        tableAccents["Ì"] = "I"
+        tableAccents["Í"] = "I"
+        tableAccents["Î"] = "I"
+        tableAccents["Ï"] = "I"
+        tableAccents["Ñ"] = "N"
+        tableAccents["Ò"] = "O"
+        tableAccents["Ó"] = "O"
+        tableAccents["Ô"] = "O"
+        tableAccents["Õ"] = "O"
+        tableAccents["Ö"] = "O"
+        tableAccents["Ō"] = "O"
+        tableAccents["Ù"] = "U"
+        tableAccents["Ú"] = "U"
+        tableAccents["Û"] = "U"
+        tableAccents["Ü"] = "U"
+        tableAccents["Ū"] = "U"
+        tableAccents["Ý"] = "Y"
+    local normalizedString = ''
+
+    for strChar in string.gmatch(str, "([%z\1-\127\194-\244][\128-\191]*)") do
+        if tableAccents[strChar] ~= nil then
+            normalizedString = normalizedString..tableAccents[strChar]
+        else
+            normalizedString = normalizedString..strChar
+        end
+    end
+    return normalizedString
+end
+
+
 
 local Reaper2GUI = Instance.new("ScreenGui")
 local Frame = Instance.new("Frame")
@@ -15,6 +99,7 @@ local Frame_3 = Instance.new("Frame")
 local UICorner_4 = Instance.new("UICorner")
 local TextLabel = Instance.new("TextLabel")
 local UICorner_5 = Instance.new("UICorner")
+local Frame_4 = Instance.new("Frame")
 
 --Properties:
 
@@ -40,19 +125,19 @@ UICorner.Parent = Background
 SecondFrame.Name = "Second Frame"
 SecondFrame.Parent = Frame
 SecondFrame.AnchorPoint = Vector2.new(0.5, 0.5)
-SecondFrame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+SecondFrame.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
 SecondFrame.BackgroundTransparency = 1.000
 SecondFrame.Position = UDim2.new(0.5, 0, 0.5, 0)
 SecondFrame.Size = UDim2.new(0.920000017, 0, 0.899999976, 0)
 
 TextButton.Parent = SecondFrame
 TextButton.AnchorPoint = Vector2.new(0.5, 1)
-TextButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+TextButton.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
 TextButton.Position = UDim2.new(0.5, 0, 1, 0)
 TextButton.Size = UDim2.new(1, 0, 0.330000013, 0)
 TextButton.Font = Enum.Font.Ubuntu
-TextButton.Text = "Activate"
-TextButton.TextColor3 = Color3.fromRGB(0, 0, 0)
+TextButton.Text = "Enable"
+TextButton.TextColor3 = Color3.fromRGB(255, 0, 0)
 TextButton.TextSize = 30.000
 
 UICorner_2.CornerRadius = UDim.new(0.0700000003, 0)
@@ -74,8 +159,8 @@ TextBox.BackgroundTransparency = 1.000
 TextBox.Position = UDim2.new(0.5, 0, 0.5, 0)
 TextBox.Size = UDim2.new(0.949999988, 0, 0.899999976, 0)
 TextBox.Font = Enum.Font.Ubuntu
-TextBox.PlaceholderText = "INSERT WANTED SECONDARIES (Seperate with commas, USE ACCENTS FOR Ryūjin Jakka ETC.)"
-TextBox.Text = ""
+TextBox.PlaceholderText = "INSERT WANTED SECONDARY (Seperate with commas if multiple wanted, accents on letters not needed c: (E.g Ryūjin Jakka))"
+TextBox.Text = FileText
 TextBox.TextColor3 = Color3.fromRGB(0, 0, 0)
 TextBox.TextScaled = true
 TextBox.TextSize = 20.000
@@ -88,76 +173,107 @@ Frame_3.Size = UDim2.new(0, 166, 0, 56)
 
 UICorner_4.Parent = Frame_3
 
-TextLabel.Parent = Frame_3
+Frame_4.Parent = Frame_3
+Frame_4.AnchorPoint = Vector2.new(0.5, 0.5)
+Frame_4.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+Frame_4.Position = UDim2.new(0.5, 0, 0.5, 0)
+Frame_4.Size = UDim2.new(0.930000007, 0, 0.800000012, 0)
+
+TextLabel.Parent = Frame_4
 TextLabel.AnchorPoint = Vector2.new(0.5, 0.5)
-TextLabel.BackgroundColor3 = Color3.fromRGB(197, 197, 197)
+TextLabel.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
 TextLabel.Position = UDim2.new(0.5, 0, 0.5, 0)
-TextLabel.Size = UDim2.new(0.930000007, 0, 0.800000012, 0)
+TextLabel.Size = UDim2.new(0.88, 0, 0.76, 0)
 TextLabel.Font = Enum.Font.SourceSans
 TextLabel.Text = "Current Secondary"
-TextLabel.TextColor3 = Color3.fromRGB(0, 0, 0)
+TextLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
 TextLabel.TextScaled = true
 TextLabel.TextSize = 14.000
 TextLabel.TextWrapped = true
+TextLabel.BackgroundTransparency = 1
 
 UICorner_5.CornerRadius = UDim.new(0.100000001, 0)
-UICorner_5.Parent = TextLabel
+UICorner_5.Parent = Frame_4
+
+local CurrentSecondary
+local Cash
 
 local function GetDATA()
-    local HTTPService = game:GetService("HttpService")
-    local Data = "Weapons"
-    local DataValue = game:GetService("ReplicatedStorage").Remotes.ReturnData:InvokeServer(Data)
-    local Table = HTTPService:JSONDecode(DataValue)
-    local Secondary = Table["Secondary"]
+    CurrentSecondary = HTTPService:JSONDecode(game:GetService("ReplicatedStorage").Remotes.ReturnData:InvokeServer("Weapons"))["Secondary"]
     Cash = tonumber(game:GetService("ReplicatedStorage").Remotes.ReturnData:InvokeServer("Cash"))
-    return(Secondary)
+    TextLabel.Text = ("Current: "..CurrentSecondary)
 end
 
-local Cash = tonumber(game:GetService("ReplicatedStorage").Remotes.ReturnData:InvokeServer("Cash"))
-local CurrentSecondary = GetDATA()
+GetDATA()
 
-game.Players.LocalPlayer.CharacterAdded:Connect(function()
-    wait(0.75)
-    CurrentSecondary = GetDATA()
-    TextLabel.Text = CurrentSecondary
-    print("Rolled "..CurrentSecondary)
+local function GUIFlash()
+    local OldTarget = TextBox.Text
+    TextBox.Text = 'Obtained wanted secondary!!'
+    for count = 1,10 do
+        Frame_2.BackgroundColor3 = Color3.fromRGB(200, 255, 200)
+        wait(0.25)
+        Frame_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+        Wait(0.25)
+    end
+    TextBox.Text = OldTarget
+end
+
+local function SecondaryCheck()
+    local TargetSecondaries = stripChars(utf8.nfcnormalize(TextBox.Text))
+    TargetSecondaries = string.lower(TargetSecondaries:gsub(" ", "")):split(',')
+    for _, Secondary in ipairs(TargetSecondaries) do
+        if Secondary ~= '' then
+            local CurrentSecondaryNormalized = stripChars(utf8.nfcnormalize(CurrentSecondary))
+            if string.lower(CurrentSecondaryNormalized:gsub(" ", "")):match(Secondary) then
+                print("OBTAINED TARGET")
+                spawn(GUIFlash)
+                return true
+            end
+        end
+    end
+end
+
+TextBox.FocusLost:Connect(function()
+    if TextBox.Text ~= '' then
+        writefile("Reaper2/WantedSec.txt", TextBox.Text)
+    end
 end)
 
 TextButton.MouseButton1Click:Connect(function()
-    local TargetText = TextBox.Text:gsub(" ", "")
-    local TargetText = string.lower(TargetText)
-    local TargetSecondaries = TargetText:split(",")
-    if _G.AutoReroll == false and TextBox.Text ~= "" then
+    if _G.AutoReroll == false and TextBox.Text ~= "" and _G.LoopOn == false then
         _G.AutoReroll = true
+        TextButton.Text = "Disable"
+        TextButton.TextColor3 = Color3.fromRGB(0, 255, 0)
+        _G.LoopOn = true
         while _G.AutoReroll == true do
-            local IsTarget = false
-            for _, Secondary in ipairs(TargetSecondaries) do
-                local CheckingSecondary = CurrentSecondary:gsub(" ", "")
-                if string.lower(CheckingSecondary):match(Secondary) then
-                    IsTarget = true
-                    print("OBTAINED TARGET: "..CurrentSecondary)
-                    local OldTarget = TextBox.Text
-                    TextBox.Text = 'Obtained wanted secondary!!'
-                    for count = 1,10 do
-                        Frame_2.BackgroundColor3 = Color3.fromRGB(200, 255, 200)
-                        wait(0.25)
-                        Frame_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-                        wait(0.25)
-                    end
-                    TextBox.Text = OldTarget
-                    break
-                end
-            end
-            Cash = tonumber(game:GetService("ReplicatedStorage").Remotes.ReturnData:InvokeServer("Cash"))
-            if IsTarget == true or Cash < 5000 then
+            GetDATA()
+            local IsTarg = SecondaryCheck()
+            if IsTarg == true then 
                 _G.AutoReroll = false
-            else
-                game:GetService("ReplicatedStorage").Remotes.Purchase:FireServer("Roll Secondary")
+                TextButton.Text = "Enable"
+                TextButton.TextColor3 = Color3.fromRGB(255, 0, 0)
+                break 
             end
-            if _G.AutoReroll == true then
-                game.Players.LocalPlayer.CharacterAdded:Wait()
-                wait(1)
+            repeat 
+                wait() 
+                GetDATA()
+            until Cash >= 5000 or _G.AutoReroll == false
+            if _G.AutoReroll == false then break end
+            game:GetService("ReplicatedStorage").Remotes.Purchase:FireServer("Roll Secondary")
+            wait()
+            GetDATA()
+            print('Rolled '..CurrentSecondary)
+            IsTarg = SecondaryCheck()
+            if IsTarg == true then
+                _G.AutoReroll = false
+                TextButton.Text = "Enable"
+                TextButton.TextColor3 = Color3.fromRGB(255, 0, 0)
             end
         end
+        _G.LoopOn = false
+    else
+        TextButton.Text = "Enable"
+        TextButton.TextColor3 = Color3.fromRGB(255, 0, 0)
+        _G.AutoReroll = false
     end
 end)
