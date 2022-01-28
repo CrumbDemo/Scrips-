@@ -1,12 +1,15 @@
-
+local UI = game.Players.LocalPlayer.PlayerGui.HUD.QuestsFrame2
 if _G.On == nil then
 	_G.On = true
 	while true do
 		wait()
 		if _G.On == true then
-		    game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = false
+			game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = false
 			game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = true
-			game:GetService("ReplicatedStorage").Remotes.Bounty:InvokeServer()
+			repeat
+				game:GetService("ReplicatedStorage").Remotes.Bounty:InvokeServer()
+				wait()
+			until UI:FindFirstChild("Bounty") and UI.Bounty:FindFirstChild("Frame") and UI.Bounty.Frame:FindFirstChild("Objective").Text:match(getgenv().Target)
 		else
 			game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = false
 		end
