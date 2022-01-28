@@ -1,8 +1,11 @@
 
 local UI = game.Players.LocalPlayer.PlayerGui.HUD.QuestsFrame2
 
-if _G.On2 == nil then _G.On2 = true end
-if _G.On2 == true then _G.On2 = false; game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = false; else _G.On2 = true end
+if _G.On2 == nil then
+	_G.On2 = true
+else 
+	if _G.On2 == true then _G.On2 = false; game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = false; else _G.On2 = true end 
+end
 
 game:GetService("ReplicatedStorage").Remotes.Bounty:InvokeServer()
 
