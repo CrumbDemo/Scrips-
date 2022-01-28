@@ -1,4 +1,6 @@
 local First = false
+local Target = getgenv().Target
+
 if _G.On == nil then 
     _G.On = true
     First = true
@@ -59,7 +61,7 @@ if First == true then
     game.Players.LocalPlayer.CharacterAdded:Connect(function()
         if _G.On == true then
             game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart")
-            toTarget(game.Players.CrimsonicDemon.Character.HumanoidRootPart.CFrame)
+            toTarget(game.Players[Target].Character.HumanoidRootPart.CFrame)
             wait(0.1)
             Punch()
             wait(0.05)
