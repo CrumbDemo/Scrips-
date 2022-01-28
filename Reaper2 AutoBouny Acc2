@@ -64,11 +64,14 @@ if First == true then
             toTarget(game.Players[Target].Character.HumanoidRootPart.CFrame)
             wait(0.1)
             Punch()
-            wait(0.05)
-            repeat
-                wait()
+            local Running = true
+            game.Players.LocalPlayer.CharacterRemoving:Connect(function()
+                Running = false
+            end)
+            while Running == true do
+                wait(0.05)
                 toTarget(Void)
-            until not game.LocalPlayer.Character
+            end
         end
     end)
 end
