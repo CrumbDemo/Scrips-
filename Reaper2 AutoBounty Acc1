@@ -4,6 +4,7 @@ if _G.On == nil then
 	while true do
 		wait()
 		if _G.On == true then
+		    game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = false
 			game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = true
 			game:GetService("ReplicatedStorage").Remotes.Bounty:InvokeServer()
 		else
