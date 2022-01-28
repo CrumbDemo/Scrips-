@@ -1,0 +1,15 @@
+
+if _G.On == nil then
+	_G.On = true
+	while true do
+		wait()
+		if _G.On == true then
+			game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = true
+			game:GetService("ReplicatedStorage").Remotes.Bounty:InvokeServer()
+		else
+			game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = false
+		end
+	end
+else
+	if _G.On == true then _G.On = false else _G.On = true end
+end
