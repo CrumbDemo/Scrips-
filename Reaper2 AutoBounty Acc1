@@ -6,7 +6,7 @@ if _G.On == true then _G.On = false; game.Players.LocalPlayer.Character.Humanoid
 
 game:GetService("ReplicatedStorage").Remotes.Bounty:InvokeServer()
 
-if getgenv().Target == nil then
+if getgenv().Target == '' then
     for _, Player in ipairs(game.Players:GetChildren()) do
         if Player ~= game.Players.LocalPlayer then
             getgenv().Target = Player.Name
