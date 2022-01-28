@@ -18,10 +18,6 @@ else
      	 _G.On = true 
      end
 end
-
-local plr = game:GetService("Players").LocalPlayer
-local tweenService = game:GetService("TweenService")
-getgenv().speed = 9e9
 local function Punch()
     local ohTable1 = {
     	["inputType"] = Enum.UserInputType.MouseButton1,
@@ -37,14 +33,6 @@ local function Punch()
     game:GetService("ReplicatedStorage").Remotes.Input:FireServer(ohTable1)
 end
 game.Players.LocalPlayer.Name = "123imnotmomo"
-function toTarget(target)
-    local speed = getgenv().speed
-    local info = TweenInfo.new((target.Position - plr.Character.HumanoidRootPart.Position).Magnitude / speed, Enum.EasingStyle.Linear)
-    local _, err = pcall(function()
-        tweenService:Create(plr.Character.HumanoidRootPart, info, {CFrame = target*CFrame.new(0, 0, 1.5)}):Play()
-    end)
-    if err then error("Couldn't create/start tween: ", err) end
-end
 function newIndexHook()
     local mt = getrawmetatable(game)
     local oldIndex = mt.__newindex
@@ -66,7 +54,7 @@ if First == true then
     game.Players.LocalPlayer.CharacterAdded:Connect(function()
         if _G.On == true then
             game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart")
-            toTarget(game.Players[Target].Character.HumanoidRootPart.CFrame)
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players[Target].Character.HumanoidRootPart.CFrame*CFrame.new(0, 0, 1.5)
             wait(0.1)
             Punch()
             local Running = true
@@ -75,7 +63,7 @@ if First == true then
             end)
             while Running == true do
                 wait(0.05)
-                toTarget(game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.new(0, -500, 0))
+                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.new(0, -500, 0))
             end
         end
     end)
