@@ -1,5 +1,5 @@
 local First = false
-local Target = getgenv().Target
+
 
 if _G.On == nil then 
     _G.On = true
@@ -12,8 +12,6 @@ else
      end
 end
 
-
-local Void = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.new(0, -500, 0)
 local plr = game:GetService("Players").LocalPlayer
 local tweenService = game:GetService("TweenService")
 getgenv().speed = 9e9
@@ -61,7 +59,7 @@ if First == true then
     game.Players.LocalPlayer.CharacterAdded:Connect(function()
         if _G.On == true then
             game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart")
-            toTarget(game.Players[Target].Character.HumanoidRootPart.CFrame)
+            toTarget(game.Players[getgenv().Target].Character.HumanoidRootPart.CFrame)
             wait(0.1)
             Punch()
             local Running = true
@@ -70,7 +68,7 @@ if First == true then
             end)
             while Running == true do
                 wait(0.05)
-                toTarget(Void)
+                toTarget(game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.new(0, -500, 0))
             end
         end
     end)
