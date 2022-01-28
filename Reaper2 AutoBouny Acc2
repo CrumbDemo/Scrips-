@@ -65,7 +65,10 @@ if First == true then
             wait(0.1)
             Punch()
             wait(0.05)
-            toTarget(Void)
+            repeat
+                wait()
+                toTarget(Void)
+            until not game.LocalPlayer.Character
         end
     end)
 end
