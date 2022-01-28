@@ -1,7 +1,7 @@
 local First = false
 local Target
 
-for _, Player in ipairs(game.Players:GetChildren() do
+for _, Player in ipairs(game.Players:GetChildren()) do
     if Player ~= game.Players.LocalPlayer then
         Target = Player
         break
