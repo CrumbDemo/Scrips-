@@ -1,6 +1,5 @@
 local First = false
 local Target
-
 for _, Player in ipairs(game.Players:GetChildren()) do
     if Player ~= game.Players.LocalPlayer then
         Target = Player
@@ -18,6 +17,10 @@ else
      	 _G.On = true 
      end
 end
+
+local plr = game:GetService("Players").LocalPlayer
+local tweenService = game:GetService("TweenService")
+getgenv().speed = 9e9
 local function Punch()
     local ohTable1 = {
     	["inputType"] = Enum.UserInputType.MouseButton1,
@@ -33,6 +36,14 @@ local function Punch()
     game:GetService("ReplicatedStorage").Remotes.Input:FireServer(ohTable1)
 end
 game.Players.LocalPlayer.Name = "123imnotmomo"
+function toTarget(target)
+    local speed = getgenv().speed
+    local info = TweenInfo.new((target.Position - plr.Character.HumanoidRootPart.Position).Magnitude / speed, Enum.EasingStyle.Linear)
+    local _, err = pcall(function()
+        tweenService:Create(plr.Character.HumanoidRootPart, info, {CFrame = target*CFrame.new(0, 0, 1.5)}):Play()
+    end)
+    if err then error("Couldn't create/start tween: ", err) end
+end
 function newIndexHook()
     local mt = getrawmetatable(game)
     local oldIndex = mt.__newindex
@@ -44,26 +55,25 @@ function newIndexHook()
         end
         return oldIndex(self, i, v)
     end)
-
     setreadonly(mt, true)
 end
 newIndexHook()
-
 if First == true then 
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.new(0, -500, 0)
+    toTarget(game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.new(0, -500, 0))
     game.Players.LocalPlayer.CharacterAdded:Connect(function()
         if _G.On == true then
             game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart")
-            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players[Target].Character.HumanoidRootPart.CFrame*CFrame.new(0, 0, 1.5)
+            toTarget(game.Players[Target.Name].Character.HumanoidRootPart.CFrame)
             wait(0.1)
             Punch()
+            wait(0.05)
             local Running = true
             game.Players.LocalPlayer.CharacterRemoving:Connect(function()
                 Running = false
             end)
             while Running == true do
-                wait(0.05)
-                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.new(0, -500, 0)
+                toTarget(game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.new(0, -500, 0))
+                wait(2)
             end
         end
     end)
