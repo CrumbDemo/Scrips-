@@ -16,7 +16,7 @@ if getgenv().Target == '' then
 end
 
 local function AutoBounty()
-    while wait() do
+    while _G.On == true and wait() do
         while wait() and not UI:FindFirstChild("Bounty") or not UI:FindFirstChild("Bounty").Frame.Objective.Text:match(getgenv().Target)  do
             game:GetService("ReplicatedStorage").Remotes.Bounty:InvokeServer()
             UI:WaitForChild("Bounty")
@@ -26,7 +26,7 @@ end
 spawn(AutoBounty)
 
 
-while _G.On  do
+while _G.On == true do
 	wait()
 	game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = false
 	game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = true
