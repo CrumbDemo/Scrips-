@@ -1,9 +1,10 @@
 local First = false
-local Target
-for _, Player in ipairs(game.Players:GetChildren()) do
-    if Player ~= game.Players.LocalPlayer then
-        Target = Player
-        break
+if getgenv().Target2 == '' then 
+    for _, Player in ipairs(game.Players:GetChildren()) do
+        if Player ~= game.Players.LocalPlayer then
+            getgenv().Target2 = Player.Name
+            break
+        end
     end
 end
 
@@ -63,7 +64,7 @@ if First == true then
     game.Players.LocalPlayer.CharacterAdded:Connect(function()
         if _G.On == true then
             game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart")
-            toTarget(game.Players[Target.Name].Character.HumanoidRootPart.CFrame)
+            toTarget(game.Players[getgenv().Target2].Character.HumanoidRootPart.CFrame)
             wait(0.07)
             Punch()
             wait(0.5)
