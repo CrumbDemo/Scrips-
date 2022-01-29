@@ -74,9 +74,7 @@ if First == true then
             while Running == true do
                 toTarget(game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame*CFrame.new(0, 0, 50))
                 wait(0.1)
-                for count = 1, 5 do 
-                    game.Players.LocalPlayer.Character.Humanoid.Health = 0
-                end
+                game.Players.LocalPlayer.Character.Head:Destroy()
                 wait(2)
             end
         end
