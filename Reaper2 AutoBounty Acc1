@@ -11,12 +11,13 @@ game:GetService("ReplicatedStorage").Remotes.Bounty:InvokeServer()
 
 local function AutoBounty()
     while _G.On2 == true and wait() do
-        while wait() and not UI:FindFirstChild("Bounty") or getgenv().Target ~= '' or not UI:FindFirstChild("Bounty").Frame.Objective.Text:match(getgenv().Target) do
-            game:GetService("ReplicatedStorage").Remotes.Bounty:InvokeServer()
-            UI:WaitForChild("Bounty")
-        end
 	if getgenv().Target == '' then
 		game:GetService("ReplicatedStorage").Remotes.Bounty:InvokeServer()
+	else
+		while wait() and not UI:FindFirstChild("Bounty") or not UI:FindFirstChild("Bounty").Frame.Objective.Text:match(getgenv().Target) do
+		    game:GetService("ReplicatedStorage").Remotes.Bounty:InvokeServer()
+		    UI:WaitForChild("Bounty")
+		end
 	end
     end
 end
