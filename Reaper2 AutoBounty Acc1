@@ -1,7 +1,9 @@
-
+local First = false
+local RunService = game:GetService("RunService")
 local UI = game.Players.LocalPlayer.PlayerGui.HUD.QuestsFrame2
 
 if _G.On2 == nil then
+	First = true
 	_G.On2 = true
 else 
 	if _G.On2 == true then _G.On2 = false; game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = false; else _G.On2 = true end 
@@ -11,14 +13,19 @@ game:GetService("ReplicatedStorage").Remotes.Bounty:InvokeServer()
 
 local function AutoBounty()
     while _G.On2 == true and wait() do
-	if getgenv().Target == '' then
-		game:GetService("ReplicatedStorage").Remotes.Bounty:InvokeServer()
+	if getgenv().Target == '' and First == true then
+		RunService.Stepped:Connect(function()
+			if _G.On2 == true and getgenv().Target == '' then
+				game:GetService("ReplicatedStorage").Remotes.Bounty:InvokeServer()
+			end
+		end)
 	else
 		while wait() and not UI:FindFirstChild("Bounty") or not UI:FindFirstChild("Bounty").Frame.Objective.Text:match(getgenv().Target) do
 		    game:GetService("ReplicatedStorage").Remotes.Bounty:InvokeServer()
 		    UI:WaitForChild("Bounty")
 		end
 	end
+	First = false
     end
 end
 spawn(AutoBounty)
