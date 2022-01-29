@@ -66,18 +66,15 @@ if First == true then
             game.Players.LocalPlayer.Character.Humanoid:ChangeState(11)
             toTarget(game.Players[getgenv().Target2].Character.HumanoidRootPart.CFrame)
             wait(0.07)
+            game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = true
             Punch()
+            game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = false
             wait(0.5)
             local Running = true
-            game.Players.LocalPlayer.CharacterRemoving:Connect(function()
-                Running = false
-            end)
-            while Running == true do
-                toTarget(game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame*CFrame.new(0, 0, 50))
-                wait(0.1)
-                game.Players.LocalPlayer.Character.Head:Destroy()
-                wait(2)
-            end
+            toTarget(game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame*CFrame.new(0, 0, 50))
+            game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = true
+            wait(0.1)
+            game.Players.LocalPlayer.Character.Head:Destroy()
         end
     end)
 else
