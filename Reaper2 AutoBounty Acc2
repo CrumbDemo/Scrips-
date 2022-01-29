@@ -80,7 +80,5 @@ if First == true then
         end
     end)
 else
-    for count = 1,5 do
-        game.Players.Character.Humanoid = 0
-    end
+    game.Players.LocalPlayer.Character.Head:Destroy()
 end
