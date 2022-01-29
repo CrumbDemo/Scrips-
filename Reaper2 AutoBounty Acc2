@@ -38,13 +38,11 @@ if First == true then
     end
     game.Players.LocalPlayer.Name = "123imnotmomo"
     function toTarget(target)
-        plr.Character.Humanoid:ChangeState(11)
         local speed = getgenv().speed
         local info = TweenInfo.new((target.Position - plr.Character.HumanoidRootPart.Position).Magnitude / speed, Enum.EasingStyle.Linear)
         local _, err = pcall(function()
             tweenService:Create(plr.Character.HumanoidRootPart, info, {CFrame = target*CFrame.new(0, 0, 1.5)}):Play()
         end)
-        plr.Character.Humanoid:ChangeState(11)
         if err then error("Couldn't create/start tween: ", err) end
     end
     function newIndexHook()
