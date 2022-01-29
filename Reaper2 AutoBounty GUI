@@ -461,7 +461,4 @@ Toggle_2.MouseButton1Click:Connect(function()
     end
     spawn(function()loadstring(game:HttpGet(("https://raw.githubusercontent.com/CrimsonicDemon/Scrips-/main/Reaper2%20AutoBounty%20Acc2"),true))();end)
     wait(1)
-    for count = 1,5 do
-        game.Players.Character.Humanoid = 0
-    end
 end)
