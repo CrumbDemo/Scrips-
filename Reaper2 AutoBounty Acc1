@@ -13,12 +13,17 @@ game:GetService("ReplicatedStorage").Remotes.Bounty:InvokeServer()
 
 local function AutoBounty()
     while _G.On2 == true and wait() do
-	if getgenv().Target == '' and First == true then
-		RunService.Stepped:Connect(function()
-			if _G.On2 == true and getgenv().Target == '' then
-				game:GetService("ReplicatedStorage").Remotes.Bounty:InvokeServer()
+    	local CurrentTarg = ''
+	if getgenv().Target == '' then
+		for _, Player in ipairs(game.Players:GetChildren()) do
+			if Player.Character and Player.Character:FindFirstChild("HumanoidRootPart") and not Player.Character:FindFirstChild("Head") then
+				CurrentTarg = Player.Name
 			end
-		end)
+		end
+		while wait() and not UI:FindFirstChild("Bounty") or not UI:FindFirstChild("Bounty").Frame.Objective.Text:match(CurrentTarg) do
+		    game:GetService("ReplicatedStorage").Remotes.Bounty:InvokeServer()
+		    UI:WaitForChild("Bounty")
+		end
 	else
 		while wait() and not UI:FindFirstChild("Bounty") or not UI:FindFirstChild("Bounty").Frame.Objective.Text:match(getgenv().Target) do
 		    game:GetService("ReplicatedStorage").Remotes.Bounty:InvokeServer()
