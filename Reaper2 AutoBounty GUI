@@ -438,7 +438,7 @@ Toggle.MouseButton1Click:Connect(function()
     print("ehei")
     if Toggle1 == true then
         Toggle.TextColor3 = Red
-        Toggle_2.Text = 'Enable'
+        Toggle.Text = 'Enable'
         Toggle1 = false
     else
         Toggle.TextColor3 = Green
