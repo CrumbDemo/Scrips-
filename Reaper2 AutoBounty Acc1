@@ -9,21 +9,15 @@ end
 
 game:GetService("ReplicatedStorage").Remotes.Bounty:InvokeServer()
 
-if getgenv().Target == '' then
-    for _, Player in ipairs(game.Players:GetChildren()) do
-        if Player ~= game.Players.LocalPlayer then
-            getgenv().Target = Player.Name
-            break
-        end    
-    end
-end
-
 local function AutoBounty()
     while _G.On2 == true and wait() do
-        while wait() and not UI:FindFirstChild("Bounty") or not UI:FindFirstChild("Bounty").Frame.Objective.Text:match(getgenv().Target)  do
+        while wait() and not UI:FindFirstChild("Bounty") or getgenv().Target ~= '' or not UI:FindFirstChild("Bounty").Frame.Objective.Text:match(getgenv().Target) do
             game:GetService("ReplicatedStorage").Remotes.Bounty:InvokeServer()
             UI:WaitForChild("Bounty")
         end
+	if getgenv().Target == '' then
+		game:GetService("ReplicatedStorage").Remotes.Bounty:InvokeServer()
+	end
     end
 end
 spawn(AutoBounty)
