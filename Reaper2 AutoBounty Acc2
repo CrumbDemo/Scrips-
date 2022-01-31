@@ -63,7 +63,6 @@ if First == true then
     game.Players.LocalPlayer.CharacterAdded:Connect(function()
         if _G.On == true then
             game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart")
-            game.Players.LocalPlayer.Character.Humanoid:ChangeState(11)
             toTarget(game.Players[getgenv().Target2].Character.HumanoidRootPart.CFrame)
             wait(0.07)
             game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = true
