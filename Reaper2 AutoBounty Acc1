@@ -24,10 +24,10 @@ local function AutoBounty()
 		    game:GetService("ReplicatedStorage").Remotes.Bounty:InvokeServer()
 		    UI:WaitForChild("Bounty")
 		end
-	else
-		while wait() and not UI:FindFirstChild("Bounty") or not UI:FindFirstChild("Bounty").Frame.Objective.Text:match(getgenv().Target) do
-		    game:GetService("ReplicatedStorage").Remotes.Bounty:InvokeServer()
-		    UI:WaitForChild("Bounty")
+	else	
+		while wait() not UI:FindFirstChild("Bounty") or not UI:FindFirstChild("Bounty").Frame.Objective.Text:match(getgenv().Target) do
+			game:GetService("ReplicatedStorage").Remotes.Bounty:InvokeServer()
+			UI:WaitForChild("Bounty")
 		end
 	end
 	First = false
@@ -35,6 +35,10 @@ local function AutoBounty()
 end
 spawn(AutoBounty)
 
+game.Players.LocalPlayer.CharacterAdded:Connect(function()
+	wait(5)
+	spawn(AutoBounty)
+end)
 
 while _G.On2 == true do
 	wait()
