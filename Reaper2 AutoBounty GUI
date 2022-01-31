@@ -445,7 +445,7 @@ game.Players.PlayerRemoved:Connect(function(Player)
 		Toggle.Text = 'Enable'
 		Toggle = false
 	end
-wait)
+end)
 
 Toggle.MouseButton1Click:Connect(function()
     getgenv().Target = Name.Text
