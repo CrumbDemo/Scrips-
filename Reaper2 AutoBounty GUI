@@ -433,6 +433,20 @@ coroutine.wrap(RJHKE_fake_script)()
 
 local Toggle1 = false
 local Toggle2 = false
+
+game.Players.PlayerRemoved:Connect(function(Player)
+	if Player.Name = Name_2.Text then 
+		Toggle_2.TextColor3 = Red
+		Toggle_2.Text = 'Enable'
+		Toggle2 = false
+	end
+	if Player.Name = Name.Text then 
+		Toggle.TextColor3 = Red
+		Toggle.Text = 'Enable'
+		Toggle = false
+	end
+wait)
+
 Toggle.MouseButton1Click:Connect(function()
     getgenv().Target = Name.Text
     print("ehei")
