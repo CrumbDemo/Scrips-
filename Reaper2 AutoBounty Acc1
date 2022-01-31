@@ -9,6 +9,12 @@ else
 	if _G.On2 == true then _G.On2 = false; game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = false; else _G.On2 = true end 
 end
 
+game.Players.PlayerRemoving:Connect(function(Player)
+	if Player.Name == getgenv().Target then
+		_G.On2 = false
+	end
+end)
+
 game:GetService("ReplicatedStorage").Remotes.Bounty:InvokeServer()
 
 local function AutoBounty()
