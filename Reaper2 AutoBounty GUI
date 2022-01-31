@@ -434,7 +434,7 @@ coroutine.wrap(RJHKE_fake_script)()
 local Toggle1 = false
 local Toggle2 = false
 
-game.Players.PlayerRemoved:Connect(function(Player)
+game.Players.PlayerRemoving:Connect(function(Player)
 	if Player.Name == Name_2.Text then 
 		Toggle_2.TextColor3 = Red
 		Toggle_2.Text = 'Enable'
