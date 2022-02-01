@@ -1,25 +1,10 @@
 
-local First = false
+
 local RunService = game:GetService("RunService")
 local UI = game.Players.LocalPlayer.PlayerGui.HUD.QuestsFrame2
 
 game.Players.LocalPlayer.CharacterAdded:Connect(function()
 	UI = game.Players.LocalPlayer:WaitForChild("PlayerGui"):WaitForChild("HUD"):WaitForChild("QuestsFrame2")
-end)
-
-if _G.On2 == nil then
-	First = true
-	_G.On2 = true
-else 
-	if _G.On2 == true then _G.On2 = false; wait(1); game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = false; else _G.On2 = true end 
-end
-
-game.Players.PlayerRemoving:Connect(function(Player)
-	if Player.Name == getgenv().Target then
-		_G.On2 = false
-		wait(1)
-		game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = false
-	end
 end)
 
 game:GetService("ReplicatedStorage").Remotes.Bounty:InvokeServer()
@@ -66,7 +51,6 @@ local function AutoBounty()
 			end
 		end
 	end
-	First = false
     end
 end
 spawn(AutoBounty)
