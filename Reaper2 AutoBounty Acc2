@@ -38,7 +38,7 @@ end
 
 game.Players[getgenv().Target2].Character:WaitForChild("HumanoidRootPart").Anchored = true
 game.Players[getgenv().Target2].CharacterAdded:Connect(function(Character)
-    if _G.On = true then
+    if _G.On == true then
         Character:WaitForChild("HumanoidRootPart").Anchored = true
     end
 end)
