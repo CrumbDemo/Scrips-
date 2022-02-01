@@ -1,4 +1,5 @@
 getgenv().Target2 = 'DemonSwordDragon'
+
 local First = false
 if getgenv().Target2 == '' then 
     for _, Player in ipairs(game.Players:GetChildren()) do
@@ -17,6 +18,7 @@ end
 if _G.On == nil then 
     _G.On = true
     First = true
+    getgenv().LplrName = game.Players.LocalPlayer.Name
 else
     if _G.On == true then
      	_G.On = false 
@@ -24,7 +26,6 @@ else
             game.Players[getgenv().Target2].CharacterAdded:Wait()
         end
      	game.Players[getgenv().Target2].Character:WaitForChild("HumanoidRootPart").Anchored = false
-        game.Players.LocalPlayer.Character.Head:Destroy()
      else
      	 _G.On = true 
      	 game.Players.LocalPlayer.Character.Head:Destroy()
@@ -91,26 +92,39 @@ if First == true then
     wait(1)
     game.Players.LocalPlayer.Character.Head:Destroy()
     game.Players.LocalPlayer.CharacterAdded:Connect(function()
+        local HealthChangedValue = false
         if _G.On == true then
             game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart")
-            local HpChanged = false
+            local DamageConnected = false
             if not game.Players[getgenv().Target2].Character then 
                 game.Players[getgenv().Target2].CharacterAdded:Wait()
             end
             game.Players[getgenv().Target2].Character:WaitForChild("Humanoid")
-            game.Players[getgenv().Target2].Status.CombatTags.ChildAdded:Connect(function(Child)
-                if Child.Value == getgenv().Target2 then
-                    HpChanged = true
-                end
-            end)
-            repeat
-           	 if not game.Players[getgenv().Target2].Character then 
-            		game.Players[getgenv().Target2].CharacterAdded:Wait()
-           	 end
-           	 local Tween = toTarget(game.Players[getgenv().Target2].Character:WaitForChild("HumanoidRootPart").CFrame*CFrame.new(0, 0, 1.5))
-            	Tween.Completed:wait()
-            	Punch()
-            until HpChanged == true
+            if not game.Players[getgenv().Target2].Character.Damage:FindFirstChild(getgenv().LplrName) then
+                game.Players[getgenv().Target2].Character.Damage.ChildAdded:Connect(function(Child)
+                    if Child.Name == getgenv().LplrName then
+                        if DamageConnected == false then
+                            Child.Changed:Connect(function()
+                                HealthChangedValue = true
+                            end)
+                            DamageConnected = true
+                        end
+                    end
+                end)
+            else
+                game.Players[getgenv().Target2].Character.Damage[getgenv().LplrName].Changed:Connect(function()
+                    HealthChangedValue = true
+                end)
+            end
+            while HealthChangedValue ~= true do
+               	if not game.Players[getgenv().Target2].Character then 
+                	game.Players[getgenv().Target2].CharacterAdded:Wait()
+               	end
+               	wait()
+                local Tween = toTarget(game.Players[getgenv().Target2].Character:WaitForChild("HumanoidRootPart").CFrame*CFrame.new(0, 0, 1.5))
+                Tween.Completed:wait()
+                Punch()
+            end
             for count = 1,5 do
                 if not game.Players[getgenv().Target2].Character then 
                     game.Players[getgenv().Target2].CharacterAdded:Wait()
