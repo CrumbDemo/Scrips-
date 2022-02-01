@@ -63,8 +63,6 @@ function newIndexHook()
     setreadonly(mt, true)
 end
 newIndexHook()
-wait(1)
-game.Players.LocalPlayer.Character.Head:Destroy()
 game.Players.LocalPlayer.CharacterAdded:Connect(function()
     local HealthChangedValue = false
     if _G.On == true then
