@@ -447,19 +447,23 @@ game.Players.PlayerRemoving:Connect(function(Player)
 	end
 end)
 
+_G.On2 = false
+_G.FirstDone2 = false
+
 Toggle.MouseButton1Click:Connect(function()
     getgenv().Target = Name.Text
-    if Toggle1 == true then
+    if _G.On2 == true then
         Toggle.TextColor3 = Red
         Toggle.Text = 'Enable'
-        Toggle1 = false
+        _G.On2 = false
     else
         Toggle.TextColor3 = Green
         Toggle.Text = 'Disable'
-        Toggle1 = true
+        _G.On2 = true
     end
     spawn(function()loadstring(game:HttpGet(("https://raw.githubusercontent.com/CrimsonicDemon/Scrips-/main/Reaper2%20AutoBounty%20Acc1"),true))();end)
 end)
+
 
 _G.On = false
 _G.FirstDone = false
