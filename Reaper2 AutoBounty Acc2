@@ -1,5 +1,5 @@
+getgenv().LplrName = game.Players.LocalPlayer.Name
 
-local First = false
 if getgenv().Target2 == '' then 
     for _, Player in ipairs(game.Players:GetChildren()) do
         if Player ~= game.Players.LocalPlayer then
@@ -8,30 +8,6 @@ if getgenv().Target2 == '' then
         end
     end
 end
-
-if not game.Players[getgenv().Target2] then
-    _G.On = false
-    return 
-end
-
-if _G.On == nil then 
-    _G.On = true
-    First = true
-    getgenv().LplrName = game.Players.LocalPlayer.Name
-else
-    if _G.On == true then
-     	_G.On = false 
-        if not game.Players[getgenv().Target2].Character then 
-            game.Players[getgenv().Target2].CharacterAdded:Wait()
-        end
-     	game.Players[getgenv().Target2].Character:WaitForChild("HumanoidRootPart").Anchored = false
-     else
-     	 _G.On = true 
-     	 game.Players.LocalPlayer.Character.Head:Destroy()
-     end
-end
-
-if _G.On == false then return end
 
 if not game.Players[getgenv().Target2].Character then 
     game.Players[getgenv().Target2].CharacterAdded:Wait()
@@ -44,96 +20,94 @@ game.Players[getgenv().Target2].CharacterAdded:Connect(function(Character)
     end
 end)
 
-if First == true then
-    local plr = game:GetService("Players").LocalPlayer
-    local tweenService = game:GetService("TweenService")
-    getgenv().speed = 9e9
-    local function Punch()
-        local ohTable1 = {
-            ["inputType"] = Enum.UserInputType.MouseButton1,
-            ["keyCode"] = Enum.KeyCode.Unknown}
-        game:GetService("ReplicatedStorage").Remotes.Input:FireServer(ohTable1)
-        local ohTable1 = {
-            ["endedInputType"] = Enum.UserInputType.MouseButton1,
-            ["endedKeyCode"] = Enum.KeyCode.Unknown}
-        game:GetService("ReplicatedStorage").Remotes.Input:FireServer(ohTable1)
-        local ohTable1 = {
-            ["endKeyCode"] = Enum.KeyCode.Unknown,
-            ["endInputType"] = Enum.UserInputType.MouseButton1}
-        game:GetService("ReplicatedStorage").Remotes.Input:FireServer(ohTable1)
-    end
-    game.Players.LocalPlayer.Name = "123imnotmomo"
-    function toTarget(target)
-        local TweenThing
-        local speed = getgenv().speed
-        local info = TweenInfo.new((target.Position - plr.Character.HumanoidRootPart.Position).Magnitude / speed, Enum.EasingStyle.Linear)
-        local _, err = pcall(function()
-            TweenThing = tweenService:Create(plr.Character.HumanoidRootPart, info, {CFrame = target})
-            TweenThing:Play()
-        end)
-        if err then error("Couldn't create/start tween: ", err) end
-        return TweenThing
-    end
-    function newIndexHook()
-        local mt = getrawmetatable(game)
-        local oldIndex = mt.__newindex
-        setreadonly(mt, false)
-        mt.__newindex = newcclosure(function(self, i, v)
-            if checkcaller() and self == plr.Character.HumanoidRootPart and i == 'CFrame' then
-                game.Players.LocalPlayer.Character.Humanoid:ChangeState(11)
-                return toTarget(v) 
-            end
-            return oldIndex(self, i, v)
-        end)
-        setreadonly(mt, true)
-    end
-    newIndexHook()
-    wait(1)
-    game.Players.LocalPlayer.Character.Head:Destroy()
-    game.Players.LocalPlayer.CharacterAdded:Connect(function()
-        local HealthChangedValue = false
-        if _G.On == true then
-            game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart")
-            local DamageConnected = false
-            repeat wait() until game.Players:FindFirstChild(getgenv().Target2)
+local plr = game:GetService("Players").LocalPlayer
+local tweenService = game:GetService("TweenService")
+getgenv().speed = 9e9
+local function Punch()
+    local ohTable1 = {
+        ["inputType"] = Enum.UserInputType.MouseButton1,
+        ["keyCode"] = Enum.KeyCode.Unknown}
+    game:GetService("ReplicatedStorage").Remotes.Input:FireServer(ohTable1)
+    local ohTable1 = {
+        ["endedInputType"] = Enum.UserInputType.MouseButton1,
+        ["endedKeyCode"] = Enum.KeyCode.Unknown}
+    game:GetService("ReplicatedStorage").Remotes.Input:FireServer(ohTable1)
+    local ohTable1 = {
+        ["endKeyCode"] = Enum.KeyCode.Unknown,
+        ["endInputType"] = Enum.UserInputType.MouseButton1}
+    game:GetService("ReplicatedStorage").Remotes.Input:FireServer(ohTable1)
+end
+game.Players.LocalPlayer.Name = "123imnotmomo"
+function toTarget(target)
+    local TweenThing
+    local speed = getgenv().speed
+    local info = TweenInfo.new((target.Position - plr.Character.HumanoidRootPart.Position).Magnitude / speed, Enum.EasingStyle.Linear)
+    local _, err = pcall(function()
+        TweenThing = tweenService:Create(plr.Character.HumanoidRootPart, info, {CFrame = target})
+        TweenThing:Play()
+    end)
+    if err then error("Couldn't create/start tween: ", err) end
+    return TweenThing
+end
+function newIndexHook()
+    local mt = getrawmetatable(game)
+    local oldIndex = mt.__newindex
+    setreadonly(mt, false)
+    mt.__newindex = newcclosure(function(self, i, v)
+        if checkcaller() and self == plr.Character.HumanoidRootPart and i == 'CFrame' then
+            game.Players.LocalPlayer.Character.Humanoid:ChangeState(11)
+            return toTarget(v) 
+        end
+        return oldIndex(self, i, v)
+    end)
+    setreadonly(mt, true)
+end
+newIndexHook()
+wait(1)
+game.Players.LocalPlayer.Character.Head:Destroy()
+game.Players.LocalPlayer.CharacterAdded:Connect(function()
+    local HealthChangedValue = false
+    if _G.On == true then
+        game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart")
+        local DamageConnected = false
+        repeat wait() until game.Players:FindFirstChild(getgenv().Target2)
+        if not game.Players[getgenv().Target2].Character then 
+            game.Players[getgenv().Target2].CharacterAdded:Wait()
+        end
+        game.Players[getgenv().Target2].Character:WaitForChild("Humanoid")
+        if not game.Players[getgenv().Target2].Character.Damage:FindFirstChild(getgenv().LplrName) then
+            game.Players[getgenv().Target2].Character.Damage.ChildAdded:Connect(function(Child)
+                if Child.Name == getgenv().LplrName then
+                    if DamageConnected == false then
+                        Child.Changed:Connect(function()
+                            HealthChangedValue = true
+                        end)
+                        DamageConnected = true
+                    end
+                end
+            end)
+        else
+            game.Players[getgenv().Target2].Character.Damage[getgenv().LplrName].Changed:Connect(function()
+                HealthChangedValue = true
+            end)
+        end
+        while HealthChangedValue ~= true and _G.On == true do
             if not game.Players[getgenv().Target2].Character then 
                 game.Players[getgenv().Target2].CharacterAdded:Wait()
             end
-            game.Players[getgenv().Target2].Character:WaitForChild("Humanoid")
-            if not game.Players[getgenv().Target2].Character.Damage:FindFirstChild(getgenv().LplrName) then
-                game.Players[getgenv().Target2].Character.Damage.ChildAdded:Connect(function(Child)
-                    if Child.Name == getgenv().LplrName then
-                        if DamageConnected == false then
-                            Child.Changed:Connect(function()
-                                HealthChangedValue = true
-                            end)
-                            DamageConnected = true
-                        end
-                    end
-                end)
-            else
-                game.Players[getgenv().Target2].Character.Damage[getgenv().LplrName].Changed:Connect(function()
-                    HealthChangedValue = true
-                end)
-            end
-            while HealthChangedValue ~= true and _G.On == true do
-               	if not game.Players[getgenv().Target2].Character then 
-                	game.Players[getgenv().Target2].CharacterAdded:Wait()
-               	end
-               	wait()
-                local Tween = toTarget(game.Players[getgenv().Target2].Character:WaitForChild("HumanoidRootPart").CFrame*CFrame.new(0, 0, 1.5))
-                Tween.Completed:wait()
-                Punch()
-            end
-            for count = 1,5 do
-                if not game.Players[getgenv().Target2].Character then 
-                    game.Players[getgenv().Target2].CharacterAdded:Wait()
-                end
-                local Tween2 = toTarget(game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart").CFrame*CFrame.new(0, 0, 50))
-                Tween2.Completed:wait()
-                wait(0.001)
-            end
-            game.Players.LocalPlayer.Character.Head:Destroy()
+            wait()
+            local Tween = toTarget(game.Players[getgenv().Target2].Character:WaitForChild("HumanoidRootPart").CFrame*CFrame.new(0, 0, 1.5))
+            Tween.Completed:wait()
+            Punch()
         end
-    end)
-end
+        for count = 1,5 do
+            if not game.Players[getgenv().Target2].Character then 
+                game.Players[getgenv().Target2].CharacterAdded:Wait()
+            end
+            local Tween2 = toTarget(game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart").CFrame*CFrame.new(0, 0, 50))
+            Tween2.Completed:wait()
+            wait(0.001)
+        end
+        game.Players.LocalPlayer.Character.Head:Destroy()
+    end
+end)
