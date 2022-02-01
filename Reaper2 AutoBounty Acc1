@@ -30,7 +30,7 @@ local function AutoBounty()
 		while wait() and not UI:FindFirstChild("Bounty") or not UI:FindFirstChild("Bounty").Frame.Objective.Text:match(CurrentTarg) do
 		    game:GetService("ReplicatedStorage").Remotes.Bounty:InvokeServer()
 		    UI:WaitForChild("Bounty")
-		    game.Players.LocalPlayer.Character then;game.Players.LocalPlayer.CharacterAdded:Wait();end;
+		    if not game.Players.LocalPlayer.Character then;game.Players.LocalPlayer.CharacterAdded:Wait();end;
 		end
 	else	
 		if not game.Players.LocalPlayer.Character then;game.Players.LocalPlayer.CharacterAdded:Wait();end;
@@ -52,5 +52,4 @@ while _G.On2 == true do
 	game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = true
 	wait()
 end
-
 
