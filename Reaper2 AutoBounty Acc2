@@ -98,8 +98,6 @@ if First == true then
                 game.Players[getgenv().Target2].CharacterAdded:Wait()
             end
             game.Players[getgenv().Target2].Character:WaitForChild("Humanoid")
-            game.Players.LocalPlayer:WaitForChild("Status")
-            game.Players.LocalPlayer.Status:WaitForChild("CombatTags")
             game.Players[getgenv().Target2].Status.CombatTags.ChildAdded:Connect(function(Child)
                 if Child.Value == getgenv().Target2 then
                     HpChanged = true
