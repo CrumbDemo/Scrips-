@@ -474,5 +474,10 @@ Toggle_2.MouseButton1Click:Connect(function()
         Toggle2 = true
     end
     spawn(function()loadstring(game:HttpGet(("https://raw.githubusercontent.com/CrimsonicDemon/Scrips-/main/Reaper2%20AutoBounty%20Acc2"),true))();end)
+    if not game.Players:FindFirstChild(getgenv().Target2) then
+    	Toggle_2.TextColor3 = Red
+        Toggle_2.Text = 'Enable'
+        Toggle2 = false
+    end
     wait(1)
 end)
