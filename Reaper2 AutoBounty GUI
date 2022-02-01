@@ -449,7 +449,6 @@ end)
 
 Toggle.MouseButton1Click:Connect(function()
     getgenv().Target = Name.Text
-    print("ehei")
     if Toggle1 == true then
         Toggle.TextColor3 = Red
         Toggle.Text = 'Enable'
@@ -471,6 +470,10 @@ Toggle_2.MouseButton1Click:Connect(function()
     	_G.On = false
         Toggle_2.TextColor3 = Red
         Toggle_2.Text = 'Enable'
+	if not game.Players[getgenv().Target2].Character then 
+            game.Players[getgenv().Target2].CharacterAdded:Wait()
+        end
+     	game.Players[getgenv().Target2].Character:WaitForChild("HumanoidRootPart").Anchored = false
     else
     	_G.On = true
         Toggle_2.TextColor3 = Green
