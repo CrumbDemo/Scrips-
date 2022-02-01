@@ -9,12 +9,20 @@ if getgenv().Target2 == '' then
     end
 end
 
+if not game.Players[getgenv().Target2] then
+    _G.On = false
+    return 
+end
+
 if _G.On == nil then 
     _G.On = true
     First = true
 else
     if _G.On == true then
      	_G.On = false 
+        if not game.Players[getgenv().Target2].Character then 
+            game.Players[getgenv().Target2].CharacterAdded:Wait()
+        end
      	game.Players[getgenv().Target2].Character:WaitForChild("HumanoidRootPart").Anchored = false
         game.Players.LocalPlayer.Character.Head:Destroy()
      else
@@ -23,6 +31,10 @@ else
 end
 
 if _G.On == false then return end
+
+if not game.Players[getgenv().Target2].Character then 
+    game.Players[getgenv().Target2].CharacterAdded:Wait()
+end
 
 game.Players[getgenv().Target2].Character:WaitForChild("HumanoidRootPart").Anchored = true
 
@@ -76,16 +88,26 @@ if First == true then
         if _G.On == true then
             game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart")
             local HpChanged = false
+            if not game.Players[getgenv().Target2].Character then 
+                game.Players[getgenv().Target2].CharacterAdded:Wait()
+            end
+            game.Players[getgenv().Target2].Character:WaitForChild("Humanoid)
             game.Players[getgenv().Target2].Character.Humanoid.HealthChanged:Connect(function()
                 HpChanged = true
             end)
             repeat
-                local Tween = toTarget(game.Players[getgenv().Target2].Character.HumanoidRootPart.CFrame*CFrame.new(0, 0, 1.5))
+                if not game.Players[getgenv().Target2].Character then 
+                    game.Players[getgenv().Target2].CharacterAdded:Wait()
+                end
+                local Tween = toTarget(game.Players[getgenv().Target2].Character:WaitForChild("HumanoidRootPart").CFrame*CFrame.new(0, 0, 1.5))
                 Tween.Completed:wait()
                 Punch()
             until HpChanged == true
             for count = 1,5 do
-                local Tween2 = toTarget(game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame*CFrame.new(0, 0, 50))
+                if not game.Players[getgenv().Target2].Character then 
+                    game.Players[getgenv().Target2].CharacterAdded:Wait()
+                end
+                local Tween2 = toTarget(game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart").CFrame*CFrame.new(0, 0, 50))
                 Tween2.Completed:wait()
                 wait(0.001)
             end
