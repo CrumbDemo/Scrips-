@@ -103,12 +103,13 @@ if First == true then
                     HpChanged = true
                 end
             end)
-                if not game.Players[getgenv().Target2].Character then 
-                    game.Players[getgenv().Target2].CharacterAdded:Wait()
-                end
-                local Tween = toTarget(game.Players[getgenv().Target2].Character:WaitForChild("HumanoidRootPart").CFrame*CFrame.new(0, 0, 1.5))
-                Tween.Completed:wait()
-                Punch()
+            repeat
+           	 if not game.Players[getgenv().Target2].Character then 
+            		game.Players[getgenv().Target2].CharacterAdded:Wait()
+           	 end
+           	 local Tween = toTarget(game.Players[getgenv().Target2].Character:WaitForChild("HumanoidRootPart").CFrame*CFrame.new(0, 0, 1.5))
+            	Tween.Completed:wait()
+            	Punch()
             until HpChanged == true
             for count = 1,5 do
                 if not game.Players[getgenv().Target2].Character then 
