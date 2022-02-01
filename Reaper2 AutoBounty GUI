@@ -438,17 +438,18 @@ game.Players.PlayerRemoving:Connect(function(Player)
 	if Player.Name == Name_2.Text then 
 		Toggle_2.TextColor3 = Red
 		Toggle_2.Text = 'Enable'
-		Toggle2 = false
+		_G.On2 = false
+		wait(1)
+		game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = false
 	end
 	if Player.Name == Name.Text then 
 		Toggle.TextColor3 = Red
 		Toggle.Text = 'Enable'
-		Toggle1 = false
+		_G.On = false
 	end
 end)
 
 _G.On2 = false
-_G.FirstDone2 = false
 
 Toggle.MouseButton1Click:Connect(function()
     getgenv().Target = Name.Text
@@ -456,6 +457,8 @@ Toggle.MouseButton1Click:Connect(function()
         Toggle.TextColor3 = Red
         Toggle.Text = 'Enable'
         _G.On2 = false
+	wait(1)
+	game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = false
     else
         Toggle.TextColor3 = Green
         Toggle.Text = 'Disable'
