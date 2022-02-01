@@ -485,7 +485,6 @@ Toggle_2.MouseButton1Click:Connect(function()
     	_G.On = true
         Toggle_2.TextColor3 = Green
         Toggle_2.Text = 'Disable'
-	game.Players.LocalPlayer.Character.Head:Destroy()
     end
     if _G.FirstDone == false then
 	spawn(function()loadstring(game:HttpGet(("https://raw.githubusercontent.com/CrimsonicDemon/Scrips-/main/Reaper2%20AutoBounty%20Acc2"),true))();end)
