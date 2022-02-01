@@ -99,9 +99,9 @@ if First == true then
             end
             game.Players[getgenv().Target2].Character:WaitForChild("Humanoid")
             game.Players.LocalPlayer:WaitForChild("Status")
-            game.Players.LocalPlayer.Status:WaitForChild("ComboCounter")
-            game.Players.LocalPlayer.Status.ComboCounter.Changed:Connect(function(Value)
-                if Value > 0 then
+            game.Players.LocalPlayer.Status:WaitForChild("CombatTags")
+            game.Players[getgenv().Target2].Status.CombatTags.ChildAdded:Connect(function(Child)
+                if Child.Value == getgenv().Target2 then
                     HpChanged = true
                 end
             end)
