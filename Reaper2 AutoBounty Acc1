@@ -1,3 +1,4 @@
+
 local First = false
 local RunService = game:GetService("RunService")
 local UI = game.Players.LocalPlayer.PlayerGui.HUD.QuestsFrame2
@@ -52,17 +53,17 @@ local function AutoBounty()
 		if not game.Players.LocalPlayer.Character then
 		    game.Players.LocalPlayer.CharacterAdded:Wait()
 		end
-		while UI.Parent ~= nil and not UI:FindFirstChild("Bounty") or not UI:FindFirstChild("Bounty").Frame.Objective.Text:match(getgenv().Target) do
-			wait()
-			if not game.Players.LocalPlayer.Character then
-			    game.Players.LocalPlayer.CharacterAdded:Wait()
-		    	end
-			game.Players.LocalPlayer.Character:WaitForChild("HuamnoidRootPart")
-			game:GetService("ReplicatedStorage").Remotes.Bounty:InvokeServer()
-			UI:WaitForChild("Bounty")
-			if not game.Players.LocalPlayer.Character then
-			    game.Players.LocalPlayer.CharacterAdded:Wait()
-		    	end
+		while UI.Parent ~= nil do
+			if not UI:FindFirstChild("Bounty") or not UI:FindFirstChild("Bounty").Frame.Objective.Text:match(getgenv().Target) then
+				wait()
+				game:GetService("ReplicatedStorage").Remotes.Bounty:InvokeServer()
+				UI:WaitForChild("Bounty")
+				if not game.Players.LocalPlayer.Character then
+				    game.Players.LocalPlayer.CharacterAdded:Wait()
+				end
+			else
+				break
+			end
 		end
 	end
 	First = false
