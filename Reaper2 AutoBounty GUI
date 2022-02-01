@@ -443,7 +443,7 @@ game.Players.PlayerRemoving:Connect(function(Player)
 	if Player.Name == Name.Text then 
 		Toggle.TextColor3 = Red
 		Toggle.Text = 'Enable'
-		Toggle = false
+		Toggle1 = false
 	end
 end)
 
