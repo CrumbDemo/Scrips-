@@ -116,7 +116,7 @@ if First == true then
                     HealthChangedValue = true
                 end)
             end
-            while HealthChangedValue ~= true do
+            while HealthChangedValue ~= true and _G.On == true do
                	if not game.Players[getgenv().Target2].Character then 
                 	game.Players[getgenv().Target2].CharacterAdded:Wait()
                	end
