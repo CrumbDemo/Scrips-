@@ -100,7 +100,7 @@ if First == true then
             game.Players[getgenv().Target2].Character:WaitForChild("Humanoid")
             game.Players.LocalPlayer:WaitForChild("Status"):WaitForChild("ComboCounter").Value.Changed:Connect(function()
                 if game.Players.LocalPlayer:WaitForChild("Status"):WaitForChild("ComboCounter").Value >= 1 then
-                    HpChanged == true
+                    HpChanged = true
                 end
             end)
                 if not game.Players[getgenv().Target2].Character then 
