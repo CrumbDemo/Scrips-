@@ -1,4 +1,4 @@
-
+getgenv().Target2 = 'DemonSwordDragon'
 local First = false
 if getgenv().Target2 == '' then 
     for _, Player in ipairs(game.Players:GetChildren()) do
@@ -27,6 +27,7 @@ else
         game.Players.LocalPlayer.Character.Head:Destroy()
      else
      	 _G.On = true 
+     	 game.Players.LocalPlayer.Character.Head:Destroy()
      end
 end
 
