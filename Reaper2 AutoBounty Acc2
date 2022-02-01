@@ -96,6 +96,7 @@ if First == true then
         if _G.On == true then
             game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart")
             local DamageConnected = false
+            repeat wait() until game.Players:FindFirstChild(getgenv().Target2)
             if not game.Players[getgenv().Target2].Character then 
                 game.Players[getgenv().Target2].CharacterAdded:Wait()
             end
