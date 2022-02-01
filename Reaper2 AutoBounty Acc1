@@ -6,12 +6,14 @@ if _G.On2 == nil then
 	First = true
 	_G.On2 = true
 else 
-	if _G.On2 == true then _G.On2 = false; game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = false; else _G.On2 = true end 
+	if _G.On2 == true then _G.On2 = false; wait(1); game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = false; else _G.On2 = true end 
 end
 
 game.Players.PlayerRemoving:Connect(function(Player)
 	if Player.Name == getgenv().Target then
 		_G.On2 = false
+		wait(1)
+		game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = false
 	end
 end)
 
@@ -26,18 +28,26 @@ local function AutoBounty()
 				CurrentTarg = Player.Name
 			end
 		end
-		if not game.Players.LocalPlayer.Character then;game.Players.LocalPlayer.CharacterAdded:Wait();end;
+		if not game.Players.LocalPlayer.Character then
+		    game.Players.LocalPlayer.CharacterAdded:Wait()
+		end
 		while wait() and not UI:FindFirstChild("Bounty") or not UI:FindFirstChild("Bounty").Frame.Objective.Text:match(CurrentTarg) do
 		    game:GetService("ReplicatedStorage").Remotes.Bounty:InvokeServer()
 		    UI:WaitForChild("Bounty")
-		    if not game.Players.LocalPlayer.Character then;game.Players.LocalPlayer.CharacterAdded:Wait();end;
+		    if not game.Players.LocalPlayer.Character then
+		        game.Players.LocalPlayer.CharacterAdded:Wait()
+		    end
 		end
 	else	
-		if not game.Players.LocalPlayer.Character then;game.Players.LocalPlayer.CharacterAdded:Wait();end;
+		if not game.Players.LocalPlayer.Character then
+		    game.Players.LocalPlayer.CharacterAdded:Wait()
+		end
 		while wait() and not UI:FindFirstChild("Bounty") or not UI:FindFirstChild("Bounty").Frame.Objective.Text:match(getgenv().Target) do
 			game:GetService("ReplicatedStorage").Remotes.Bounty:InvokeServer()
 			UI:WaitForChild("Bounty")
-			if not game.Players.LocalPlayer.Character then;game.Players.LocalPlayer.CharacterAdded:Wait();end;
+			if not game.Players.LocalPlayer.Character then
+			    game.Players.LocalPlayer.CharacterAdded:Wait()
+		    end
 		end
 	end
 	First = false
@@ -47,7 +57,9 @@ spawn(AutoBounty)
 
 while _G.On2 == true do
 	wait()
-	if not game.Players.LocalPlayer.Character then;game.Players.LocalPlayer.CharacterAdded:Wait();end;
+	if not game.Players.LocalPlayer.Character then
+	    game.Players.LocalPlayer.CharacterAdded:Wait()
+	end
 	game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart").Anchored = false
 	game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = true
 	wait()
