@@ -52,7 +52,7 @@ local function AutoBounty()
 		if not game.Players.LocalPlayer.Character then
 		    game.Players.LocalPlayer.CharacterAdded:Wait()
 		end
-		while not UI:FindFirstChild("Bounty") or not UI:FindFirstChild("Bounty").Frame.Objective.Text:match(getgenv().Target) do
+		while UI.Parent ~= nil and not UI:FindFirstChild("Bounty") or not UI:FindFirstChild("Bounty").Frame.Objective.Text:match(getgenv().Target) do
 			wait()
 			if not game.Players.LocalPlayer.Character then
 			    game.Players.LocalPlayer.CharacterAdded:Wait()
