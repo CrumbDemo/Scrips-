@@ -1,4 +1,3 @@
-getgenv().Target2 = 'DemonSwordDragon'
 
 local First = false
 if getgenv().Target2 == '' then 
