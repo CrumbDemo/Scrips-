@@ -37,6 +37,11 @@ if not game.Players[getgenv().Target2].Character then
 end
 
 game.Players[getgenv().Target2].Character:WaitForChild("HumanoidRootPart").Anchored = true
+game.Players[getgenv().Target2].CharacterAdded:Connect(function(Character)
+    if _G.On = true then
+        Character:WaitForChild("HumanoidRootPart").Anchored = true
+    end
+end)
 
 if First == true then
     local plr = game:GetService("Players").LocalPlayer
