@@ -484,6 +484,7 @@ Toggle_2.MouseButton1Click:Connect(function()
     else
     	_G.On = true
         Toggle_2.TextColor3 = Green
+	game.Players.LocalPlayer.Character:WaitForChild("Head"):Destroy()
         Toggle_2.Text = 'Disable'
     end
     if _G.FirstDone == false then
