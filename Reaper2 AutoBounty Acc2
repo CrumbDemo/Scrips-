@@ -106,6 +106,6 @@ game.Players.LocalPlayer.CharacterAdded:Connect(function()
             Tween2.Completed:wait()
             wait(0.001)
         end
-        game.Players.LocalPlayer.Character.Head:Destroy()
+        game.Players.LocalPlayer.Character:WaitForChild("Head"):Destroy()
     end
 end)
